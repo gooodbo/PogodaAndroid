@@ -55,7 +55,7 @@ public class Main extends AppCompatActivity {
         protected Void doInBackground(Void... params) {
 
             while (progress < 100) {
-                progress = +2;
+                progress += 2;
                 publishProgress(progress);
                 SystemClock.sleep(300);
             }
