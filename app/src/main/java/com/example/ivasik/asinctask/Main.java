@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.simple.parser.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -21,38 +20,23 @@ import java.net.URL;
 import java.util.concurrent.ExecutionException;
 
 public class Main extends AppCompatActivity {
-    private String data = "";
+    String parsingData = "";
     private TextView tvCity, tvWeathere, tvTemp, tvHumidity, tvWind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
         tvCity = findViewById(R.id.textView1);
         tvWeathere = findViewById(R.id.textView2);
         tvTemp = findViewById(R.id.textView3);
         tvHumidity = findViewById(R.id.textView4);
         tvWind = findViewById(R.id.textView5);
-
-        setContentView(R.layout.activity_main);
         Background background = new Background();
         background.execute();
 
-        try {
-            data = background.get();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
 
-        try {
-            tvCity.setText(parsingCity(data));
-            tvWeathere.setText(parsingCity(data));
-            tvTemp.setText(parsingCity(data));
-            tvHumidity.setText(parsingCity(data));
-            tvWind.setText(parsingCity(data));
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
     }
 
     public String parsingCity(String parsingData) throws ParseException {
@@ -105,7 +89,6 @@ public class Main extends AppCompatActivity {
             Toast.makeText(Main.this, "Вызов PreExecute ", Toast.LENGTH_LONG).show();
         }
 
-        String parsingData = "";
 
 
         @Override
@@ -114,7 +97,7 @@ public class Main extends AppCompatActivity {
             String query = "http://api.openweathermap.org/data/2.5/weather?q=Minsk,by&units=metric&APPID=b1e607de7b2c594b9d4a4d6d8fe3916b\n";
             HttpURLConnection connection = null;
             StringBuilder stringBuilder = new StringBuilder();
-
+            System.out.println("Я в соединении");
             try {
                 connection = (HttpURLConnection) new URL(query).openConnection();
                 connection.setRequestMethod("GET");
@@ -140,7 +123,6 @@ public class Main extends AppCompatActivity {
                 if (connection != null)
                     connection.disconnect();
             }
-
             return parsingData;
         }
 
@@ -148,7 +130,17 @@ public class Main extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             Toast.makeText(Main.this, "Вызов onPostExecute", Toast.LENGTH_LONG).show();
+            try {
+                tvCity.setText(parsingCity(parsingData));
+                tvWeathere.setText(parsingPogoda(parsingData));
+                tvTemp.setText(parsingTemp(parsingData).intValue());
+                tvHumidity.setText(parsingHumidity(parsingData).intValue());
+                tvWind.setText(parsingWind(parsingData).intValue());
 
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            
         }
 
     }
