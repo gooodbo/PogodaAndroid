@@ -79,7 +79,6 @@ public class Main extends AppCompatActivity {
     }
 
 
-    @SuppressLint("StaticFieldLeak")
     private class Background extends AsyncTask<Void, Void, String> {
 
 
@@ -140,7 +139,7 @@ public class Main extends AppCompatActivity {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            
+
         }
 
     }
