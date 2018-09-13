@@ -1,7 +1,6 @@
 package com.example.ivasik.asinctask;
 
 
-import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,10 +16,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
 
 public class Main extends AppCompatActivity {
-    String parsingData = "";
+    private String parsingData = "";
     private TextView tvCity, tvWeathere, tvTemp, tvHumidity, tvWind;
 
     @Override
@@ -35,7 +33,6 @@ public class Main extends AppCompatActivity {
         tvWind = findViewById(R.id.textView5);
         Background background = new Background();
         background.execute();
-
 
     }
 
@@ -78,9 +75,7 @@ public class Main extends AppCompatActivity {
         return (Long) windData.get("speed");
     }
 
-
-    private class Background extends AsyncTask<Void, Void, String> {
-
+    private class Background extends AsyncTask<Void, Void, Void> {
 
         @Override
         protected void onPreExecute() {
@@ -88,10 +83,8 @@ public class Main extends AppCompatActivity {
             Toast.makeText(Main.this, "Вызов PreExecute ", Toast.LENGTH_LONG).show();
         }
 
-
-
         @Override
-        protected String doInBackground(Void... voids) {
+        protected Void doInBackground(Void... voids) {
 
             String query = "http://api.openweathermap.org/data/2.5/weather?q=Minsk,by&units=metric&APPID=b1e607de7b2c594b9d4a4d6d8fe3916b\n";
             HttpURLConnection connection = null;
@@ -122,25 +115,25 @@ public class Main extends AppCompatActivity {
                 if (connection != null)
                     connection.disconnect();
             }
-            return parsingData;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
             Toast.makeText(Main.this, "Вызов onPostExecute", Toast.LENGTH_LONG).show();
             try {
                 tvCity.setText(parsingCity(parsingData));
-                tvWeathere.setText(parsingPogoda(parsingData));
-                tvTemp.setText(parsingTemp(parsingData).intValue());
-                tvHumidity.setText(parsingHumidity(parsingData).intValue());
-                tvWind.setText(parsingWind(parsingData).intValue());
+                tvWeathere.setText("Облачность: " + parsingPogoda(parsingData));
+                tvTemp.setText("Температура: " + parsingTemp(parsingData).intValue() + " °С");
+                tvHumidity.setText("Влажность: " + parsingHumidity(parsingData).intValue() + " %");
+                tvWind.setText("Скорость ветра: " + parsingWind(parsingData).intValue() + " км/ч");
 
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-
         }
+
 
     }
 }

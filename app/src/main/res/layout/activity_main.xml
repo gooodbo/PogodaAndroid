@@ -10,10 +10,13 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
-        android:text="@string/textview1" />
+        android:layout_above="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginBottom="-74dp"
+        android:text="@string/textview1"
+        android:textColor="@color/colorPrimaryDark"
+
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -21,32 +24,40 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="92dp"
-        android:text="@string/textview2" />
+        android:layout_marginStart="39dp"
+        android:layout_marginTop="74dp"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:text="@string/textview2"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="151dp"
-        android:text="@string/textview3" />
+        android:layout_alignStart="@+id/textView1"
+        android:layout_below="@+id/textView2"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/textview3"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="201dp"
-        android:text="@string/textview4" />
+        android:textColor="@color/design_default_color_primary_dark"
+
+        android:layout_alignStart="@+id/textView1"
+        android:layout_below="@+id/textView3"
+        android:text="@string/textview4"
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:text="@string/textview5" />
+        android:layout_alignStart="@+id/textView1"
+        android:layout_below="@+id/textView4"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/textview5"
+        android:textSize="25sp" />
 </RelativeLayout>
