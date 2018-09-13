@@ -1,6 +1,7 @@
 package com.example.ivasik.asinctask;
 
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -118,20 +119,24 @@ public class Main extends AppCompatActivity {
             return null;
         }
 
+        @SuppressLint("SetTextI18n")
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            Toast.makeText(Main.this, "Вызов onPostExecute", Toast.LENGTH_LONG).show();
-            try {
-                tvCity.setText(parsingCity(parsingData));
-                tvWeathere.setText("Облачность: " + parsingPogoda(parsingData));
-                tvTemp.setText("Температура: " + parsingTemp(parsingData).intValue() + " °С");
-                tvHumidity.setText("Влажность: " + parsingHumidity(parsingData).intValue() + " %");
-                tvWind.setText("Скорость ветра: " + parsingWind(parsingData).intValue() + " км/ч");
+            Parsing parsing = new Parsing();
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            Toast.makeText(Main.this, "Вызов onPostExecute", Toast.LENGTH_LONG).show();
+            // tvCity.setText(parsingCity(parsingData));
+            tvCity.setText(parsing.parseString("name", parsingData));
+            // tvWeathere.setText("Облачность: " + parsingPogoda(parsingData));
+            tvWeathere.setText("Облачность: " + parsing.parseString("weather", "main", parsingData));
+            //tvTemp.setText("Температура: " + parsingTemp(parsingData).intValue() + " °С");
+            tvTemp.setText("Температура: " + parsing.parseLong("main", "temp", parsingData) + " °С");
+            // tvHumidity.setText("Влажность: " + parsingHumidity(parsingData).intValue() + " %");
+            tvHumidity.setText("Влажность: " + parsing.parseLong("main", "humidity", parsingData) + " %");
+            //   tvWind.setText("Скорость ветра: " + parsingWind(parsingData).intValue() + " км/ч");
+            tvWind.setText("Скорость ветра: " + parsing.parseLong("wind", "speed", parsingData) + " км/ч");
+
         }
 
 
